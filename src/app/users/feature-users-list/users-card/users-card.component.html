@@ -1,0 +1,16 @@
+<mat-card class="example-card">
+  <mat-card-header>
+    <mat-card-title>NAME:{{ user.name }}</mat-card-title>
+    <br>
+  </mat-card-header>
+  <br>
+  <mat-card-content>
+    USERNAME:{{ user.username }} <br>
+      EMAIL:{{ user.email }}<br>
+      PHONE:{{ user.phone }}
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="deleteUser()">Delete</button>
+  </mat-card-actions>
+</mat-card>
+

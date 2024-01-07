@@ -1,0 +1,8 @@
+@if (error$ | async; as error) {
+  {{ error }}
+} @else {
+
+  @for (user of users$ | async; track $index; ) {
+    <app-users-card [user]="user" (deleteClick)="deleteUser(user)"></app-users-card>
+  }
+}
