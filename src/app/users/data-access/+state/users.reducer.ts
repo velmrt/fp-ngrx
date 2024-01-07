@@ -16,11 +16,11 @@ export const initialUsersState: UsersState = {
 
 export const usersFeature = createFeature({
   name: USERS_FEATURE_KEY,
-  reducer:  createReducer(
+  reducer: createReducer(
     initialUsersState,
     on(usersAction.loadUsersSuccess, (state, {users}) => ({...state, users})),
     on(usersAction.loadUsersFailure, (state, {error}) => ({...state, error})),
-    on(usersAction.deleteUserSuccess, (state, { user }) => ({
+    on(usersAction.deleteUserSuccess, (state, {user}) => ({
       ...state,
       users: state.users.filter(u => u !== user),
     })),

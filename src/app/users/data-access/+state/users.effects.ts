@@ -1,5 +1,5 @@
 import {Actions, createEffect, ofType} from "@ngrx/effects";
-import { inject} from "@angular/core";
+import {inject} from "@angular/core";
 import * as usersActions from './users.actions';
 import {UsersApiService} from "../../http/users-api.service";
 import {catchError, map, mergeMap, of} from "rxjs";
@@ -9,10 +9,10 @@ export const loadUsers$ = createEffect(
     ofType(usersActions.loadUsers),
     mergeMap(() => api.getUsers()
       .pipe(
-        map(users => usersActions.loadUsersSuccess({ users })),
-        catchError(error => of(usersActions.loadUsersFailure({ error })))
+        map(users => usersActions.loadUsersSuccess({users})),
+        catchError(error => of(usersActions.loadUsersFailure({error})))
       )
     )
   ),
-  { functional: true }
+  {functional: true}
 )

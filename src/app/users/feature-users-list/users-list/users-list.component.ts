@@ -22,7 +22,6 @@ export class UsersListComponent implements OnInit {
   users$ = this.store.select(usersSelectors.selectUsers);
   error$ = this.store.select(usersSelectors.selectUsersError);
 
-
   ngOnInit() {
     this.store.dispatch(usersActions.loadUsers())
     console.log(this.store)

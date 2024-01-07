@@ -3,7 +3,6 @@ import {MatCardModule} from "@angular/material/card";
 import {UserApiInterface} from "../../interfaces/user-api-interface";
 import {MatButtonModule} from "@angular/material/button";
 
-
 @Component({
   selector: 'app-users-card',
   standalone: true,
@@ -19,7 +18,7 @@ export class UsersCardComponent {
   @Output() deleteClick: EventEmitter<UserApiInterface> = new EventEmitter<UserApiInterface>()
 
   deleteUser() {
-    if(this.user) {
+    if (this.user) {
       this.deleteClick.emit(this.user)
     }
   }
