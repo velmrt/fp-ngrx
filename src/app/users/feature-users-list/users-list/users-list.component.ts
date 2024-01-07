@@ -5,6 +5,7 @@ import * as usersActions from '../../data-access/+state/users.actions';
 import * as usersSelectors from '../../data-access/+state/users.selectors'
 import {UsersCardComponent} from "../users-card/users-card.component";
 import {UserApiInterface} from "../../interfaces/user-api-interface";
+import {AppState} from "../../../app.store";
 
 @Component({
   selector: 'app-feature-users-list',
@@ -17,14 +18,14 @@ import {UserApiInterface} from "../../interfaces/user-api-interface";
   styleUrl: './users-list.component.scss'
 })
 export class UsersListComponent implements OnInit {
-  private readonly store: Store = inject(Store)
+  private readonly store: Store<AppState> = inject(Store)
   users$ = this.store.select(usersSelectors.selectUsers);
   error$ = this.store.select(usersSelectors.selectUsersError);
 
 
-
   ngOnInit() {
     this.store.dispatch(usersActions.loadUsers())
+    console.log(this.store)
   }
 
   deleteUser(user: UserApiInterface) {
