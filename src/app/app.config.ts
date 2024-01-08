@@ -15,22 +15,21 @@ export const appConfig: ApplicationConfig = {
     providers: [
       provideRouter(routes),
       provideClientHydration(),
-      provideHttpClient(),
-      provideStore(),
       provideAnimations(),
+      provideHttpClient(),
       provideEffects(userEffects),
+      provideStore({
+        [usersFeature.name]: usersFeature.reducer
+      }),
       provideStoreDevtools({
         maxAge: 25, // Retains last 25 states
         logOnly: !isDevMode(), // Restrict extension to log-only mod
-      }),
-      provideStore({
-        [usersFeature.name]: usersFeature.reducer
       }),
       {
         provide: API_URL,
         useValue: 'https://jsonplaceholder.typicode.com/users',
       },
-      provideAnimations()
+
     ]
   }
 ;
