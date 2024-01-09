@@ -5,30 +5,33 @@ import {LocalStorageService} from "../services/local-storage.service";
 import {UsersState} from "./users.reducer";
 import * as usersActions from "./users.actions";
 import {UserApiInterface} from "../../interfaces/user-api-interface";
-import {AddUser} from "../../interfaces/add-user";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersFacade {
   private readonly store: Store = inject(Store);
-  private readonly localStorageService:LocalStorageService = inject(LocalStorageService)
+  private readonly localStorageService: LocalStorageService = inject(LocalStorageService)
 
   init() {
     const storedState: UsersState | null = this.localStorageService.loadState();
     if (storedState && storedState.users.length) {
-      this.store.dispatch(usersActions.loadUsersSuccess({ users: storedState.users }));
+      this.store.dispatch(usersActions.loadUsersSuccess({users: storedState.users}));
     } else {
       this.store.dispatch(usersActions.loadUsers());
     }
   }
 
   deleteUser(user: UserApiInterface) {
-    this.store.dispatch(UsersActions.deleteUserSuccess({ user }))
+    this.store.dispatch(UsersActions.deleteUserSuccess({user}))
   }
 
-  addUser(user: AddUser) {
-    this.store.dispatch(UsersActions.addUserSuccess({ user }))
+  addUser(user: UserApiInterface) {
+    this.store.dispatch(UsersActions.addUserSuccess({user}))
+  }
+
+  editUser(user: UserApiInterface) {
+    this.store.dispatch(UsersActions.editUserSuccess({user}))
   }
 
 }

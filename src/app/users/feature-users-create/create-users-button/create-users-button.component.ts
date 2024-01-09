@@ -7,7 +7,6 @@ import {CreateUsersDialogComponent} from '../create-users-dialog/create-users-di
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {UsersFacade} from "../../data-access/+state/users-facade";
 
-
 @Component({
   selector: 'create-users-button',
   standalone: true,
@@ -17,30 +16,20 @@ import {UsersFacade} from "../../data-access/+state/users-facade";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateUsersButtonComponent {
-  private name!: string;
-  private email!: string;
-  private username!: string;
-  private phone!: string
-  public dialog = inject(MatDialog);
+  private readonly dialog = inject(MatDialog);
   private readonly usersFacade = inject(UsersFacade);
   private readonly destroyRef = inject(DestroyRef)
 
-
   openAddUserDialog(): void {
     const dialogRef: MatDialogRef<CreateUsersDialogComponent> = this.dialog.open(CreateUsersDialogComponent, {
-      data: {name: this.name, email: this.email, username: this.username, phone: this.phone}
+      data: {name: '', email: '', username: '', phone: '', isEdit: false},
+      width: '400px'
     });
     dialogRef.afterClosed()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(result => {
         if (result) {
-          const newUserData = {
-            name: result.name,
-            email: result.email,
-            username: result.username,
-            phone: result.phone
-          };
-          this.usersFacade.addUser(newUserData);
+          this.usersFacade.addUser(result);
         }
       });
   }

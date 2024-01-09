@@ -45,14 +45,16 @@ export const usersFeature = createFeature({
     on(userActions.addUserFailure, (state, {error}) => ({...state, error})),
 
 
-    on(userActions.editUserSuccess, (state, {updatedUser}) => {
-      const editedUsers = state.users.map((user) => (user === updatedUser? { ...user, ...updatedUser } : user));
-      const newState = {...state, users: editedUsers};
-      localStorageService.saveState(newState);
-      return newState;
+    on(userActions.editUserSuccess, (state, {user}) => {
+      const updatedUsers = state.users.map(existingUser => {
+        return existingUser.id === user.id ? { ...existingUser, ...user } : existingUser ;
+      });
+      const newState = {...state, users: updatedUsers};
+      localStorageService.saveState(newState)
+      console.log();
+      return newState ;
     }),
     on(userActions.editUserFailure, (state, {error}) => ({...state, error})),
-
   )
 })
 

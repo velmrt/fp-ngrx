@@ -1,9 +1,9 @@
 export interface UserApiInterface {
-  id: number;
+  id?: number;
   name: string;
   username: string;
   email: string;
-  address: {
+  address?: {
     street: string;
     suite: string;
     city: string;
@@ -14,10 +14,11 @@ export interface UserApiInterface {
     };
   };
   phone: string;
-  website: string;
-  company: {
+  website?: string;
+  company?: {
     name: string;
     catchPhrase: string;
     bs: string;
   };
+  isEdit?: boolean
 }

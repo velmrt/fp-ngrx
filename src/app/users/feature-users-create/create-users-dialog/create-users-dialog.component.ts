@@ -5,7 +5,7 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
-
+import {UserApiInterface} from "../../interfaces/user-api-interface";
 
 @Component({
   selector: 'users-create-users-dialog',
@@ -23,19 +23,18 @@ import {MatButtonModule} from '@angular/material/button';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CreateUsersDialogComponent {
-
   public formGroup: FormGroup;
-  private formBuilder = inject(FormBuilder);
-  public dialogRef = inject(MatDialogRef<CreateUsersDialogComponent>);
+  private readonly formBuilder = inject(FormBuilder);
+  private readonly dialogRef = inject(MatDialogRef<CreateUsersDialogComponent>);
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { name: string,  username: string, email: string, phone: string },
+    @Inject(MAT_DIALOG_DATA) public data: UserApiInterface
   ) {
     this.formGroup = this.formBuilder.group({
-      name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      username: ['', Validators.required],
-      phone: ['', Validators.required]
+      name: [data ? data.name : '', Validators.required],
+      email: [data ? data.email : '', [Validators.required, Validators.email]],
+      username: [data ? data.username : '', Validators.required],
+      phone: [data ? data.phone : '', Validators.required]
     });
   }
 
@@ -48,6 +47,7 @@ export class CreateUsersDialogComponent {
         phone: this.formGroup.value.phone
       }
       this.dialogRef.close(formData);
+      console.log(formData)
     }
   }
 }
