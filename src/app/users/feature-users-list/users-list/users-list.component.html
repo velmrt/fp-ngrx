@@ -1,5 +1,6 @@
-<create-users-button></create-users-button>
-
+<button mat-fab color="primary" class="add-user-fab-button" (click)="openAddUserDialog(false)">
+  <mat-icon>add</mat-icon>
+</button>
 @if (error$ | async; as error) {
   {{ error }}
 } @else {

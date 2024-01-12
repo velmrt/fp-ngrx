@@ -1,34 +1,30 @@
 import {inject, Injectable} from '@angular/core';
 import {Store} from "@ngrx/store";
-import * as UsersActions from './users.actions';
-import {LocalStorageService} from "../services/local-storage.service";
-import {UsersState} from "./users.reducer";
-import * as usersActions from "./users.actions";
 import {UserApiInterface} from "../../interfaces/user-api-interface";
-import {AddUser} from "../../interfaces/add-user";
+import * as usersSelectors from "./users.selectors";
+import {UsersActions} from "./users.actions";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersFacade {
   private readonly store: Store = inject(Store);
-  private readonly localStorageService:LocalStorageService = inject(LocalStorageService)
+  public readonly users$ = this.store.select(usersSelectors.selectUsers);
+  public readonly error$ = this.store.select(usersSelectors.selectUsersError);
 
   init() {
-    const storedState: UsersState | null = this.localStorageService.loadState();
-    if (storedState && storedState.users.length) {
-      this.store.dispatch(usersActions.loadUsersSuccess({ users: storedState.users }));
-    } else {
-      this.store.dispatch(usersActions.loadUsers());
-    }
+    this.store.dispatch(UsersActions.loadUsers())
   }
 
-  deleteUser(user: UserApiInterface) {
-    this.store.dispatch(UsersActions.deleteUserSuccess({ user }))
+  deleteUser(deletedUser: UserApiInterface) {
+    this.store.dispatch(UsersActions.deleteUserSuccess({deletedUser}))
   }
 
-  addUser(user: AddUser) {
-    this.store.dispatch(UsersActions.addUserSuccess({ user }))
+  addUser(addedUser: UserApiInterface) {
+    this.store.dispatch(UsersActions.addUserSuccess({addedUser}))
   }
 
+  editUser(editedUser: UserApiInterface) {
+    this.store.dispatch(UsersActions.editUserSuccess({editedUser}))
+  }
 }
